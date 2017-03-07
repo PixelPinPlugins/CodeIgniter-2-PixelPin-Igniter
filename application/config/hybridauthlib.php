@@ -18,7 +18,7 @@ $config =
 			//PixelPin Provider
 			"PixelPin" => array (
 				"enabled" => false,
-				"keys"    => array ( "id" => "", "secret" => '' ),
+				"keys"    => array ( "id" => "", "secret" => "" ),
 			),
 		),
 
