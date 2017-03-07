@@ -7,7 +7,6 @@
 	</head>
 <body>
 <p>ID: <?php echo $user_profile->identifier ?></p>
-<p>Display Name: <?php echo $user_profile->displayName ?></p>
 <p>First Name: <?php echo $user_profile->firstName ?></p>
 <p>Last Name: <?php echo $user_profile->lastName ?></p>
 <p>Nickname: <?php echo $user_profile->nickname ?></p>
