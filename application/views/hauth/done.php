@@ -13,7 +13,6 @@
 <p>Gender: <?php echo $user_profile->gender ?></p>
 <p>Birthdate: <?php echo $user_profile->birthdate ?></p>
 <p>Email: <?php echo $user_profile->email ?></p>
-<p>Email Verified: <?php echo $user_profile->emailVerified ?></p>
 <p>Phone Number: <?php echo $user_profile->phoneNumber ?></p>
 <p>Address: <?php echo $user_profile->address ?></p>
 <p>Country: <?php echo $user_profile->country ?></p>
