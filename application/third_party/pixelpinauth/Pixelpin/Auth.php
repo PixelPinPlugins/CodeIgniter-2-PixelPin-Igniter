@@ -1,18 +1,18 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html
 */
 
 /**
- * Hybrid_Auth class
+ * Pixelpin_Auth class
  * 
- * Hybrid_Auth class provide a simple way to authenticate users via OpenID and OAuth.
+ * Pixelpin_Auth class provide a simple way to authenticate users via OpenID and OAuth.
  * 
- * Generally, Hybrid_Auth is the only class you should instanciate and use throughout your application.
+ * Generally, Pixelpin_Auth is the only class you should instanciate and use throughout your application.
  */
-class Hybrid_Auth 
+class Pixelpin_Auth 
 {
 	public static $version = "2.1.2";
 
@@ -27,22 +27,22 @@ class Hybrid_Auth
 	// --------------------------------------------------------------------
 
 	/**
-	* Try to start a new session of none then initialize Hybrid_Auth
+	* Try to start a new session of none then initialize Pixelpin_Auth
 	* 
-	* Hybrid_Auth constructor will require either a valid config array or
+	* Pixelpin_Auth constructor will require either a valid config array or
 	* a path for a configuration file as parameter. To know more please 
 	* refer to the Configuration section:
-	* http://hybridauth.sourceforge.net/userguide/Configuration.html
+	* http://pixelpinauth.sourceforge.net/userguide/Configuration.html
 	*/
 	function __construct( $config )
 	{ 
-		Hybrid_Auth::initialize( $config ); 
+		Pixelpin_Auth::initialize( $config ); 
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	* Try to initialize Hybrid_Auth with given $config hash or file
+	* Try to initialize Pixelpin_Auth with given $config hash or file
 	*/
 	public static function initialize( $config )
 	{
@@ -66,7 +66,7 @@ class Hybrid_Auth
 			$config["debug_file"] = null;
 		}
 
-		# load hybridauth required files, a autoload is on the way...
+		# load pixelpinauth required files, a autoload is on the way...
 		require_once $config["path_base"] . "Error.php";
 		require_once $config["path_base"] . "Logger.php";
 
@@ -83,61 +83,61 @@ class Hybrid_Auth
 		require_once $config["path_base"] . "User_Activity.php";
 
 		// hash given config
-		Hybrid_Auth::$config = $config;
+		Pixelpin_Auth::$config = $config;
 
 		// instace of log mng
-		Hybrid_Auth::$logger = new Hybrid_Logger();
+		Pixelpin_Auth::$logger = new Pixelpin_Logger();
 
 		// instace of errors mng
-		Hybrid_Auth::$error = new Hybrid_Error();
+		Pixelpin_Auth::$error = new Pixelpin_Error();
 
 		// start session storage mng
-		Hybrid_Auth::$store = new Hybrid_Storage();
+		Pixelpin_Auth::$store = new Pixelpin_Storage();
 
-		Hybrid_Logger::info( "Enter Hybrid_Auth::initialize()"); 
-		Hybrid_Logger::info( "Hybrid_Auth::initialize(). PHP version: " . PHP_VERSION ); 
-		Hybrid_Logger::info( "Hybrid_Auth::initialize(). Hybrid_Auth version: " . Hybrid_Auth::$version ); 
-		Hybrid_Logger::info( "Hybrid_Auth::initialize(). Hybrid_Auth called from: " . Hybrid_Auth::getCurrentUrl() ); 
+		Pixelpin_Logger::info( "Enter Pixelpin_Auth::initialize()"); 
+		Pixelpin_Logger::info( "Pixelpin_Auth::initialize(). PHP version: " . PHP_VERSION ); 
+		Pixelpin_Logger::info( "Pixelpin_Auth::initialize(). Pixelpin_Auth version: " . Pixelpin_Auth::$version ); 
+		Pixelpin_Logger::info( "Pixelpin_Auth::initialize(). Pixelpin_Auth called from: " . Pixelpin_Auth::getCurrentUrl() ); 
 
 		// PHP Curl extension [http://www.php.net/manual/en/intro.curl.php]
 		if ( ! function_exists('curl_init') ) {
-			Hybrid_Logger::error('Hybridauth Library needs the CURL PHP extension.');
-			throw new Exception('Hybridauth Library needs the CURL PHP extension.');
+			Pixelpin_Logger::error('Pixelpinauth Library needs the CURL PHP extension.');
+			throw new Exception('Pixelpinauth Library needs the CURL PHP extension.');
 		}
 
 		// PHP JSON extension [http://php.net/manual/en/book.json.php]
 		if ( ! function_exists('json_decode') ) {
-			Hybrid_Logger::error('Hybridauth Library needs the JSON PHP extension.');
-			throw new Exception('Hybridauth Library needs the JSON PHP extension.');
+			Pixelpin_Logger::error('Pixelpinauth Library needs the JSON PHP extension.');
+			throw new Exception('Pixelpinauth Library needs the JSON PHP extension.');
 		} 
 
 		// session.name
 		if( session_name() != "PHPSESSID" ){
-			Hybrid_Logger::info('PHP session.name diff from default PHPSESSID. http://php.net/manual/en/session.configuration.php#ini.session.name.');
+			Pixelpin_Logger::info('PHP session.name diff from default PHPSESSID. http://php.net/manual/en/session.configuration.php#ini.session.name.');
 		}
 
 		// safe_mode is on
 		if( ini_get('safe_mode') ){
-			Hybrid_Logger::info('PHP safe_mode is on. http://php.net/safe-mode.');
+			Pixelpin_Logger::info('PHP safe_mode is on. http://php.net/safe-mode.');
 		}
 
 		// open basedir is on
 		if( ini_get('open_basedir') ){
-			Hybrid_Logger::info('PHP open_basedir is on. http://php.net/open-basedir.');
+			Pixelpin_Logger::info('PHP open_basedir is on. http://php.net/open-basedir.');
 		}
 
-		Hybrid_Logger::debug( "Hybrid_Auth initialize. dump used config: ", serialize( $config ) );
-		Hybrid_Logger::debug( "Hybrid_Auth initialize. dump current session: ", Hybrid_Auth::storage()->getSessionData() ); 
-		Hybrid_Logger::info( "Hybrid_Auth initialize: check if any error is stored on the endpoint..." );
+		Pixelpin_Logger::debug( "Pixelpin_Auth initialize. dump used config: ", serialize( $config ) );
+		Pixelpin_Logger::debug( "Pixelpin_Auth initialize. dump current session: ", Pixelpin_Auth::storage()->getSessionData() ); 
+		Pixelpin_Logger::info( "Pixelpin_Auth initialize: check if any error is stored on the endpoint..." );
 
-		if( Hybrid_Error::hasError() ){ 
-			$m = Hybrid_Error::getErrorMessage();
-			$c = Hybrid_Error::getErrorCode();
-			$p = Hybrid_Error::getErrorPrevious();
+		if( Pixelpin_Error::hasError() ){ 
+			$m = Pixelpin_Error::getErrorMessage();
+			$c = Pixelpin_Error::getErrorCode();
+			$p = Pixelpin_Error::getErrorPrevious();
 
-			Hybrid_Logger::error( "Hybrid_Auth initialize: A stored Error found, Throw an new Exception and delete it from the store: Error#$c, '$m'" );
+			Pixelpin_Logger::error( "Pixelpin_Auth initialize: A stored Error found, Throw an new Exception and delete it from the store: Error#$c, '$m'" );
 
-			Hybrid_Error::clearError();
+			Pixelpin_Error::clearError();
 
 			// try to provide the previous if any
 			// Exception::getPrevious (PHP 5 >= 5.3.0) http://php.net/manual/en/exception.getprevious.php
@@ -149,7 +149,7 @@ class Hybrid_Auth
 			}
 		}
 
-		Hybrid_Logger::info( "Hybrid_Auth initialize: no error found. initialization succeed." );
+		Pixelpin_Logger::info( "Pixelpin_Auth initialize: no error found. initialization succeed." );
 
 		// Endof initialize 
 	}
@@ -157,35 +157,35 @@ class Hybrid_Auth
 	// --------------------------------------------------------------------
 
 	/**
-	* Hybrid storage system accessor
+	* Pixelpin storage system accessor
 	*
-	* Users sessions are stored using HybridAuth storage system ( HybridAuth 2.0 handle PHP Session only) and can be acessed directly by
-	* Hybrid_Auth::storage()->get($key) to retrieves the data for the given key, or calling
-	* Hybrid_Auth::storage()->set($key, $value) to store the key => $value set.
+	* Users sessions are stored using PixelpinAuth storage system ( PixelpinAuth 2.0 handle PHP Session only) and can be acessed directly by
+	* Pixelpin_Auth::storage()->get($key) to retrieves the data for the given key, or calling
+	* Pixelpin_Auth::storage()->set($key, $value) to store the key => $value set.
 	*/
 	public static function storage()
 	{
-		return Hybrid_Auth::$store;
+		return Pixelpin_Auth::$store;
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	* Get hybridauth session data. 
+	* Get pixelpinauth session data. 
 	*/
 	function getSessionData()
 	{ 
-		return Hybrid_Auth::storage()->getSessionData();
+		return Pixelpin_Auth::storage()->getSessionData();
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	* restore hybridauth session data. 
+	* restore pixelpinauth session data. 
 	*/
 	function restoreSessionData( $sessiondata = NULL )
 	{ 
-		Hybrid_Auth::storage()->restoreSessionData( $sessiondata );
+		Pixelpin_Auth::storage()->restoreSessionData( $sessiondata );
 	}
 
 	// --------------------------------------------------------------------
@@ -196,49 +196,49 @@ class Hybrid_Auth
 	* If the user is already connected we just return and instance of provider adapter,
 	* ELSE, try to authenticate and authorize the user with the provider. 
 	*
-	* $params is generally an array with required info in order for this provider and HybridAuth to work,
+	* $params is generally an array with required info in order for this provider and PixelpinAuth to work,
 	*  like :
-	*          hauth_return_to: URL to call back after authentication is done
+	*          pauth_return_to: URL to call back after authentication is done
 	*        openid_identifier: The OpenID identity provider identifier
 	*           google_service: can be "Users" for Google user accounts service or "Apps" for Google hosted Apps
 	*/
 	public static function authenticate( $providerId, $params = NULL )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Auth::authenticate( $providerId )" );
+		Pixelpin_Logger::info( "Enter Pixelpin_Auth::authenticate( $providerId )" );
 
 		// if user not connected to $providerId then try setup a new adapter and start the login process for this provider
-		if( ! Hybrid_Auth::storage()->get( "hauth_session.$providerId.is_logged_in" ) ){ 
-			Hybrid_Logger::info( "Hybrid_Auth::authenticate( $providerId ), User not connected to the provider. Try to authenticate.." );
+		if( ! Pixelpin_Auth::storage()->get( "pauth_session.$providerId.is_logged_in" ) ){ 
+			Pixelpin_Logger::info( "Pixelpin_Auth::authenticate( $providerId ), User not connected to the provider. Try to authenticate.." );
 
-			$provider_adapter = Hybrid_Auth::setup( $providerId, $params );
+			$provider_adapter = Pixelpin_Auth::setup( $providerId, $params );
 
 			$provider_adapter->login();
 		}
 
 		// else, then return the adapter instance for the given provider
 		else{
-			Hybrid_Logger::info( "Hybrid_Auth::authenticate( $providerId ), User is already connected to this provider. Return the adapter instance." );
+			Pixelpin_Logger::info( "Pixelpin_Auth::authenticate( $providerId ), User is already connected to this provider. Return the adapter instance." );
 
-			return Hybrid_Auth::getAdapter( $providerId );
+			return Pixelpin_Auth::getAdapter( $providerId );
 		}
 	}
 
 	public static function logout ($providerId)
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Auth::logout ( $providerId )" );
+		Pixelpin_Logger::info( "Enter Pixelpin_Auth::logout ( $providerId )" );
 
 		// if user not connected to $providerId then try setup a new adapter and start the login process for this provider
-		if( ! Hybrid_Auth::storage()->get( "hauth_session.$providerId.is_logged_in" ) ){ 
-			Hybrid_Logger::info( "Hybrid_Auth::authenticate( $providerId ), Logging out." );
+		if( ! Pixelpin_Auth::storage()->get( "pauth_session.$providerId.is_logged_in" ) ){ 
+			Pixelpin_Logger::info( "Pixelpin_Auth::authenticate( $providerId ), Logging out." );
 
-			$provider_adapter = Hybrid_Auth::setup( $providerId );
+			$provider_adapter = Pixelpin_Auth::setup( $providerId );
 		}
 
 		// else, then return the adapter instance for the given provider
 		else{
-			Hybrid_Logger::info( "Hybrid_Auth::authenticate( $providerId ), User is already connected to this provider. Return the adapter instance." );
+			Pixelpin_Logger::info( "Pixelpin_Auth::authenticate( $providerId ), User is already connected to this provider. Return the adapter instance." );
 
-			return Hybrid_Auth::getAdapter( $providerId );
+			return Pixelpin_Auth::getAdapter( $providerId );
 		}
 	}
 
@@ -249,9 +249,9 @@ class Hybrid_Auth
 	*/ 
 	public static function getAdapter( $providerId = NULL )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Auth::getAdapter( $providerId )" );
+		Pixelpin_Logger::info( "Enter Pixelpin_Auth::getAdapter( $providerId )" );
 
-		return Hybrid_Auth::setup( $providerId );
+		return Pixelpin_Auth::setup( $providerId );
 	}
 
 	// --------------------------------------------------------------------
@@ -261,31 +261,31 @@ class Hybrid_Auth
 	*/ 
 	public static function setup( $providerId, $params = NULL )
 	{
-		Hybrid_Logger::debug( "Enter Hybrid_Auth::setup( $providerId )", $params );
+		Pixelpin_Logger::debug( "Enter Pixelpin_Auth::setup( $providerId )", $params );
 
 		if( ! $params ){ 
-			$params = Hybrid_Auth::storage()->get( "hauth_session.$providerId.id_provider_params" );
+			$params = Pixelpin_Auth::storage()->get( "pauth_session.$providerId.id_provider_params" );
 			
 			if( ! $params)
 			{
-			Hybrid_Logger::debug( "Hybrid_Auth::setup( $providerId ), no params given. Trying to get the sotred for this provider.", $params );
+			Pixelpin_Logger::debug( "Pixelpin_Auth::setup( $providerId ), no params given. Trying to get the sotred for this provider.", $params );
 			}
 		}
 
 		if( ! $params ){ 
 			$params = ARRAY();
 			
-			Hybrid_Logger::info( "Hybrid_Auth::setup( $providerId ), no stored params found for this provider. Initialize a new one for new session" );
+			Pixelpin_Logger::info( "Pixelpin_Auth::setup( $providerId ), no stored params found for this provider. Initialize a new one for new session" );
 		}
 
-		if( ! isset( $params["hauth_return_to"] ) ){
-			$params["hauth_return_to"] = Hybrid_Auth::getCurrentUrl(); 
+		if( ! isset( $params["pauth_return_to"] ) ){
+			$params["pauth_return_to"] = Pixelpin_Auth::getCurrentUrl(); 
 		}
 
-		Hybrid_Logger::debug( "Hybrid_Auth::setup( $providerId ). HybridAuth Callback URL set to: ", $params["hauth_return_to"] );
+		Pixelpin_Logger::debug( "Pixelpin_Auth::setup( $providerId ). PixelpinAuth Callback URL set to: ", $params["pauth_return_to"] );
 
 		# instantiate a new IDProvider Adapter
-		$provider   = new Hybrid_Provider_Adapter();
+		$provider   = new Pixelpin_Provider_Adapter();
 
 		$provider->factory( $providerId, $params );
 
@@ -299,7 +299,7 @@ class Hybrid_Auth
 	*/
 	public static function isConnectedWith( $providerId )
 	{
-		return (bool) Hybrid_Auth::storage()->get( "hauth_session.{$providerId}.is_logged_in" );
+		return (bool) Pixelpin_Auth::storage()->get( "pauth_session.{$providerId}.is_logged_in" );
 	}
 
 	// --------------------------------------------------------------------
@@ -311,8 +311,8 @@ class Hybrid_Auth
 	{
 		$idps = array();
 
-		foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
-			if( Hybrid_Auth::isConnectedWith( $idpid ) ){
+		foreach( Pixelpin_Auth::$config["providers"] as $idpid => $params ){
+			if( Pixelpin_Auth::isConnectedWith( $idpid ) ){
 				$idps[] = $idpid;
 			}
 		}
@@ -329,11 +329,11 @@ class Hybrid_Auth
 	{
 		$idps = array();
 
-		foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
+		foreach( Pixelpin_Auth::$config["providers"] as $idpid => $params ){
 			if($params['enabled']) {
 				$idps[$idpid] = array( 'connected' => false );
 
-				if( Hybrid_Auth::isConnectedWith( $idpid ) ){
+				if( Pixelpin_Auth::isConnectedWith( $idpid ) ){
 					$idps[$idpid]['connected'] = true;
 				}
 			}
@@ -349,10 +349,10 @@ class Hybrid_Auth
 	*/ 
 	public static function logoutAllProviders()
 	{
-		$idps = Hybrid_Auth::getConnectedProviders();
+		$idps = Pixelpin_Auth::getConnectedProviders();
 
 		foreach( $idps as $idp ){
-			$adapter = Hybrid_Auth::getAdapter( $idp );
+			$adapter = Pixelpin_Auth::getAdapter( $idp );
 
 			$adapter->logout();
 		}
@@ -365,7 +365,7 @@ class Hybrid_Auth
 	*/
 	public static function redirect( $url, $mode = "PHP" )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Auth::redirect( $url, $mode )" );
+		Pixelpin_Logger::info( "Enter Pixelpin_Auth::redirect( $url, $mode )" );
 
 		if( $mode == "PHP" ){
 			header( "Location: $url" ) ;

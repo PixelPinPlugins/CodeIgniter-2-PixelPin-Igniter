@@ -1,17 +1,17 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html
 */
 
 // ----------------------------------------------------------------------------------------
-//	HybridAuth Config file: http://hybridauth.sourceforge.net/userguide/Configuration.html
+//	PixelpinAuth Config file: http://pixelpinauth.sourceforge.net/userguide/Configuration.html
 // ----------------------------------------------------------------------------------------
 
 return 
 	array(
-		"base_url" => "http://localhost/hybridauth-git/hybridauth/", 
+		"base_url" => "http://localhost/pixelpinauth-git/pixelpinauth/", 
 
 		"providers" => array (
 			//PixelPin Provider

@@ -1,18 +1,18 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 /**
- * Hybrid_User_Activity 
+ * Pixelpin_User_Activity 
  * 
  * used to provider the connected user activity stream on a standardized structure across supported social apis.
  * 
- * http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Activity.html
+ * http://pixelpinauth.sourceforge.net/userguide/Profile_Data_User_Activity.html
  */
-class Hybrid_User_Activity
+class Pixelpin_User_Activity
 {
 	/* activity id on the provider side, usually given as integer */
 	public $id = NULL;

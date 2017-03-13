@@ -1,25 +1,25 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 /**
- * Hybrid_Provider_Model provide a common interface for supported IDps on HybridAuth.
+ * Pixelpin_Provider_Model provide a common interface for supported IDps on PixelpinAuth.
  *
  * Basically, each provider adapter has to define at least 4 methods:
- *   Hybrid_Providers_{provider_name}::initialize()
- *   Hybrid_Providers_{provider_name}::loginBegin()
- *   Hybrid_Providers_{provider_name}::loginFinish()
- *   Hybrid_Providers_{provider_name}::getUserProfile()
+ *   Pixelpin_Providers_{provider_name}::initialize()
+ *   Pixelpin_Providers_{provider_name}::loginBegin()
+ *   Pixelpin_Providers_{provider_name}::loginFinish()
+ *   Pixelpin_Providers_{provider_name}::getUserProfile()
  *
- * HybridAuth also come with three others models
- *   Class Hybrid_Provider_Model_OpenID for providers that uses the OpenID 1 and 2 protocol.
- *   Class Hybrid_Provider_Model_OAuth1 for providers that uses the OAuth 1 protocol.
- *   Class Hybrid_Provider_Model_OAuth2 for providers that uses the OAuth 2 protocol.
+ * PixelpinAuth also come with three others models
+ *   Class Pixelpin_Provider_Model_OpenID for providers that uses the OpenID 1 and 2 protocol.
+ *   Class Pixelpin_Provider_Model_OAuth1 for providers that uses the OAuth 1 protocol.
+ *   Class Pixelpin_Provider_Model_OAuth2 for providers that uses the OAuth 2 protocol.
  */
-abstract class Hybrid_Provider_Model
+abstract class Pixelpin_Provider_Model
 {
 	/* IDp ID (or unique name) */
 	public $providerId = NULL;
@@ -33,7 +33,7 @@ abstract class Hybrid_Provider_Model
 	/* Endpoint URL for that provider */
 	public $endpoint   = NULL; 
 
-	/* Hybrid_User obj, represents the current loggedin user */
+	/* Pixelpin_User obj, represents the current loggedin user */
 	public $user       = NULL;
 
 	/* the provider api client (optional) */
@@ -46,7 +46,7 @@ abstract class Hybrid_Provider_Model
 	{
 		# init the IDp adapter parameters, get them from the cache if possible
 		if( ! $params ){
-			$this->params = Hybrid_Auth::storage()->get( "hauth_session.$providerId.id_provider_params" );
+			$this->params = Pixelpin_Auth::storage()->get( "pauth_session.$providerId.id_provider_params" );
 		}
 		else{
 			$this->params = $params;
@@ -55,20 +55,20 @@ abstract class Hybrid_Provider_Model
 		// idp id
 		$this->providerId = $providerId;
 
-		// set HybridAuth endpoint for this provider
-		$this->endpoint = Hybrid_Auth::storage()->get( "hauth_session.$providerId.hauth_endpoint" );
+		// set PixelpinAuth endpoint for this provider
+		$this->endpoint = Pixelpin_Auth::storage()->get( "pauth_session.$providerId.pauth_endpoint" );
 
 		// idp config
 		$this->config = $config;
 
 		// new user instance
-		$this->user = new Hybrid_User();
+		$this->user = new Pixelpin_User();
 		$this->user->providerId = $providerId;
 
 		// initialize the current provider adapter
 		$this->initialize(); 
 
-		Hybrid_Logger::debug( "Hybrid_Provider_Model::__construct( $providerId ) initialized. dump current adapter instance: ", serialize( $this ) );
+		Pixelpin_Logger::debug( "Pixelpin_Provider_Model::__construct( $providerId ) initialized. dump current adapter instance: ", serialize( $this ) );
 	}
 
 	// --------------------------------------------------------------------
@@ -101,11 +101,11 @@ abstract class Hybrid_Provider_Model
 	// --------------------------------------------------------------------
 
    	/**
-	* generic logout, just erase current provider adapter stored data to let Hybrid_Auth all forget about it
+	* generic logout, just erase current provider adapter stored data to let Pixelpin_Auth all forget about it
 	*/
 	function logout()
 	{
-		Hybrid_Logger::info( "Enter [{$this->providerId}]::logout()" );
+		Pixelpin_Logger::info( "Enter [{$this->providerId}]::logout()" );
 
 		$this->clearTokens();
 
@@ -119,7 +119,7 @@ abstract class Hybrid_Provider_Model
 	*/
 	function getUserProfile()
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide users contats list for {$this->providerId} yet." ); 
+		Pixelpin_Logger::error( "PixelpinAuth do not provide users contats list for {$this->providerId} yet." ); 
 		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
@@ -131,7 +131,7 @@ abstract class Hybrid_Provider_Model
 	*/
 	function getUserContacts() 
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide users contats list for {$this->providerId} yet." ); 
+		Pixelpin_Logger::error( "PixelpinAuth do not provide users contats list for {$this->providerId} yet." ); 
 		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
@@ -143,7 +143,7 @@ abstract class Hybrid_Provider_Model
 	*/
 	function getUserActivity( $stream ) 
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." ); 
+		Pixelpin_Logger::error( "PixelpinAuth do not provide user's activity stream for {$this->providerId} yet." ); 
 		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
@@ -155,7 +155,7 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	function setUserStatus( $status )
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." ); 
+		Pixelpin_Logger::error( "PixelpinAuth do not provide user's activity stream for {$this->providerId} yet." ); 
 		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
@@ -167,7 +167,7 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	public function isUserConnected()
 	{
-		return (bool) Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.is_logged_in" );
+		return (bool) Pixelpin_Auth::storage()->get( "pauth_session.{$this->providerId}.is_logged_in" );
 	}
 
 	// --------------------------------------------------------------------
@@ -177,9 +177,9 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	public function setUserConnected()
 	{
-		Hybrid_Logger::info( "Enter [{$this->providerId}]::setUserConnected()" );
+		Pixelpin_Logger::info( "Enter [{$this->providerId}]::setUserConnected()" );
 		
-		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 1 );
+		Pixelpin_Auth::storage()->set( "pauth_session.{$this->providerId}.is_logged_in", 1 );
 	}
 
 	// --------------------------------------------------------------------
@@ -189,9 +189,9 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	public function setUserUnconnected()
 	{
-		Hybrid_Logger::info( "Enter [{$this->providerId}]::setUserUnconnected()" );
+		Pixelpin_Logger::info( "Enter [{$this->providerId}]::setUserUnconnected()" );
 		
-		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 0 ); 
+		Pixelpin_Auth::storage()->set( "pauth_session.{$this->providerId}.is_logged_in", 0 ); 
 	}
 
 	// --------------------------------------------------------------------
@@ -202,10 +202,10 @@ abstract class Hybrid_Provider_Model
 	public function token( $token, $value = NULL )
 	{
 		if( $value === NULL ){
-			return Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.token.$token" );
+			return Pixelpin_Auth::storage()->get( "pauth_session.{$this->providerId}.token.$token" );
 		}
 		else{
-			Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.token.$token", $value );
+			Pixelpin_Auth::storage()->set( "pauth_session.{$this->providerId}.token.$token", $value );
 		}
 	}
 
@@ -216,7 +216,7 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	public function deleteToken( $token )
 	{
-		Hybrid_Auth::storage()->delete( "hauth_session.{$this->providerId}.token.$token" );
+		Pixelpin_Auth::storage()->delete( "pauth_session.{$this->providerId}.token.$token" );
 	}
 
 	// --------------------------------------------------------------------
@@ -226,6 +226,6 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	public function clearTokens()
 	{ 
-		Hybrid_Auth::storage()->deleteMatch( "hauth_session.{$this->providerId}." );
+		Pixelpin_Auth::storage()->deleteMatch( "pauth_session.{$this->providerId}." );
 	}
 }

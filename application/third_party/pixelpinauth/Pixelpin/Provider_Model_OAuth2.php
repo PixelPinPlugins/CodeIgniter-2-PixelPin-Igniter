@@ -1,23 +1,23 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 /**
- * To implement an OAuth 2 based service provider, Hybrid_Provider_Model_OAuth2
+ * To implement an OAuth 2 based service provider, Pixelpin_Provider_Model_OAuth2
  * can be used to save the hassle of the authentication flow. 
  * 
- * Each class that inherit from Hybrid_Provider_Model_OAuth2 have to implemenent
+ * Each class that inherit from Pixelpin_Provider_Model_OAuth2 have to implemenent
  * at least 2 methods:
- *   Hybrid_Providers_{provider_name}::initialize()     to setup the provider api end-points urls
- *   Hybrid_Providers_{provider_name}::getUserProfile() to grab the user profile
+ *   Pixelpin_Providers_{provider_name}::initialize()     to setup the provider api end-points urls
+ *   Pixelpin_Providers_{provider_name}::getUserProfile() to grab the user profile
  *
- * Hybrid_Provider_Model_OAuth2 use OAuth2Client v0.1 which can be found on
- * Hybrid/thirdparty/OAuth/OAuth2Client.php
+ * Pixelpin_Provider_Model_OAuth2 use OAuth2Client v0.1 which can be found on
+ * Pixelpin/thirdparty/OAuth/OAuth2Client.php
  */
-class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
+class Pixelpin_Provider_Model_OAuth2 extends Pixelpin_Provider_Model
 {
 	// default permissions 
 	public $scope = "";
@@ -63,7 +63,7 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 		}
 
 		// include OAuth2 client
-		require_once Hybrid_Auth::$config["path_libraries"] . "OAuth/OAuth2Client.php";
+		require_once Pixelpin_Auth::$config["path_libraries"] . "OAuth/OAuth2Client.php";
 
 		// create a new OAuth2 client instance
 		$this->api = new OAuth2Client( $this->config["keys"]["id"], $this->config["keys"]["secret"], $this->endpoint );
@@ -77,8 +77,8 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 		}
 
 		// Set curl proxy if exist
-		if( isset( Hybrid_Auth::$config["proxy"] ) ){
-			$this->api->curl_proxy = Hybrid_Auth::$config["proxy"];
+		if( isset( Pixelpin_Auth::$config["proxy"] ) ){
+			$this->api->curl_proxy = Pixelpin_Auth::$config["proxy"];
 		}
 	}
 
@@ -90,7 +90,7 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 	function loginBegin()
 	{
 		// redirect the user to the provider authentication url
-		Hybrid_Auth::redirect( $this->api->authorizeUrl( array( "scope" => $this->scope ) ) ); 
+		Pixelpin_Auth::redirect( $this->api->authorizeUrl( array( "scope" => $this->scope ) ) ); 
 	}
 
 	// --------------------------------------------------------------------

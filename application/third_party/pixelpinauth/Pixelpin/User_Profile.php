@@ -1,20 +1,20 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 /**
- * Hybrid_User_Profile object represents the current logged in user profile. 
- * The list of fields available in the normalized user profile structure used by HybridAuth.  
+ * Pixelpin_User_Profile object represents the current logged in user profile. 
+ * The list of fields available in the normalized user profile structure used by PixelpinAuth.  
  *
- * The Hybrid_User_Profile object is populated with as much information about the user as 
- * HybridAuth was able to pull from the given API or authentication provider.
+ * The Pixelpin_User_Profile object is populated with as much information about the user as 
+ * PixelpinAuth was able to pull from the given API or authentication provider.
  * 
- * http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html
+ * http://pixelpinauth.sourceforge.net/userguide/Profile_Data_User_Profile.html
  */
-class Hybrid_User_Profile
+class Pixelpin_User_Profile
 {
 	/* The Unique user's ID on the connected provider */
 	public $identifier = NULL;

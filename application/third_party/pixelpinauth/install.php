@@ -2,7 +2,7 @@
 	$HYBRIDAUTH_VERSION = "2.1.2";
 ?><html> 
 <head>
-<title>HybridAuth Installer</title>
+<title>PixelpinAuth Installer</title>
 <meta name="robots" content="NOINDEX, NOFOLLOW">  
 <style type="text/css">
 #content {
@@ -124,12 +124,12 @@ ul li label {
 									"callback"          => TRUE,
 									"require_client_id" => TRUE, 
 									"new_app_link"      => "https://pixelpin.co.uk",
-									"userguide_section" => "http://hybridauth.sourceforge.net/userguide/IDProvider_info_Google.html",
+									"userguide_section" => "http://pixelpinauth.sourceforge.net/userguide/IDProvider_info_Google.html",
 								) 
 							);
 
 	if( count( $_POST ) ):
-		$CONFIG_TEMPLATE = file_get_contents( "Hybrid/resources/config.php.tpl" );
+		$CONFIG_TEMPLATE = file_get_contents( "Pixelpin/resources/config.php.tpl" );
  
 		foreach( $_POST AS $k => $v ):
 			$v = strip_tags( $v );
@@ -144,7 +144,7 @@ ul li label {
 
 		if( ! $is_installed ):
 	?>
-		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Installation Error: </strong> HybridAuth configuration file <span style='color:#000000;font-weight:normal;'><?php echo $CONFIG_FILE_NAME; ?></span> must be <b >WRITABLE</b> in order for the installer to work.</p>
+		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Installation Error: </strong> PixelpinAuth configuration file <span style='color:#000000;font-weight:normal;'><?php echo $CONFIG_FILE_NAME; ?></span> must be <b >WRITABLE</b> in order for the installer to work.</p>
 		<br />
 		Please try again!
 	<?php
@@ -155,16 +155,16 @@ ul li label {
 		<tr>
 		<td align="left"> 
 		<div id="content">
-			<p style='background-color:#390;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #030 solid;'><strong>Installation completed: </strong> HybridAuth has been successfully installed on your web server.</p>
+			<p style='background-color:#390;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #030 solid;'><strong>Installation completed: </strong> PixelpinAuth has been successfully installed on your web server.</p>
 
-			<h1 style="margin-bottom: 15px;">HybridAuth <?php echo $HYBRIDAUTH_VERSION; ?> Installer</h1> 
+			<h1 style="margin-bottom: 15px;">PixelpinAuth <?php echo $HYBRIDAUTH_VERSION; ?> Installer</h1> 
 			<hr />
 			<br /> 
 
 			<ul style="list-style:disc inside;"> 
 				<li style="color: #000000;font-size: 14px;"><b style="color:red">Don't forget to delete</b> "<b>install.php</b>".</li>
 				<li style="color: #000000;font-size: 15px;">Visit the <a href="../examples/">examples</a> directory to try some working demos.</li> 
-				<li style="color: #000000;font-size: 15px;">Check out HybridAuth documentation at <a href="http://hybridauth.sourceforge.net">http://hybridauth.sourceforge.net</a>.</li> 
+				<li style="color: #000000;font-size: 15px;">Check out PixelpinAuth documentation at <a href="http://pixelpinauth.sourceforge.net">http://pixelpinauth.sourceforge.net</a>.</li> 
 			</ul> 
 
 			<br /> 			
@@ -189,7 +189,7 @@ ul li label {
 		// check if php 5+. well donno the exact version to test, because it depend on which providers will be used..
 		if ( version_compare( PHP_VERSION, '5.2', '<=' ) ):
 	?>
-		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Error: </strong> HybridAuth requires PHP 5.2 or higher</p>
+		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Error: </strong> PixelpinAuth requires PHP 5.2 or higher</p>
 	<?php
 		endif;
 	?> 
@@ -198,7 +198,7 @@ ul li label {
 		// check config file is writable
 		if( ! is_writable( $CONFIG_FILE_NAME ) ):
 	?>
-		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Error: </strong> HybridAuth configuration file <span style='color:#000000;font-weight:normal;'><?php echo $CONFIG_FILE_NAME; ?></span> must be <b >WRITABLE</b> in order for the installer to work.</p>
+		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Error: </strong> PixelpinAuth configuration file <span style='color:#000000;font-weight:normal;'><?php echo $CONFIG_FILE_NAME; ?></span> must be <b >WRITABLE</b> in order for the installer to work.</p>
 	<?php
 		endif;
 	?> 
@@ -207,7 +207,7 @@ ul li label {
 		// check if curl is enabled
 		if( ! in_array  ( 'curl', get_loaded_extensions() ) ):
 	?>
-		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Error: </strong>HybridAuth will require to use <a href="http://php.net/manual/en/book.curl.php" style="color:white" target="_blank"><b>CURL library</b></a>. Please install/enable it before continuing.</p>
+		<p style='background-color:#EE3322;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #C52F24 solid;'><strong>Error: </strong>PixelpinAuth will require to use <a href="http://php.net/manual/en/book.curl.php" style="color:white" target="_blank"><b>CURL library</b></a>. Please install/enable it before continuing.</p>
 	<?php
 		endif;
 	?>
@@ -216,42 +216,42 @@ ul li label {
 		// warn if we are local
 		if( $_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1" ):
 	?>
-		<p style='background-color:#F90;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #F00 solid;'><strong>NOTE: </strong> HybridAuth will not work properly in localhost, as some social networks DO NOT TRUST localhost requests</p>
+		<p style='background-color:#F90;color:#FFFFFF;margin:1em 0;padding:0.8em;border:1px #F00 solid;'><strong>NOTE: </strong> PixelpinAuth will not work properly in localhost, as some social networks DO NOT TRUST localhost requests</p>
 	<?php
 		endif;
 	?>
 
 <form method="post"> 
-	<h1 style="margin-bottom: 15px;">HybridAuth <?php echo $HYBRIDAUTH_VERSION; ?> Installer</h1> 
+	<h1 style="margin-bottom: 15px;">PixelpinAuth <?php echo $HYBRIDAUTH_VERSION; ?> Installer</h1> 
 	<hr />
 
 	<h4>Important notices</h4> 
 
 	<ul style="list-style:disc inside;">
 		<li style="color: #000000;font-size: 14px;">For security reason, please delete ("<b>install.php</b>") file as soon as you complete the installation process,</li>
-		<li style="color: #000000;font-size: 14px;">Using the HybridAuth installer will erase your existing configuration file. If you already have an old installation of HybridAuth you might want to keep a copy of <b>config.php</b>,</li>
-		<li style="color: #000000;font-size: 14px;">HybridAuth includes by default <?php echo count( $PROVIDERS_CONFIG ) + 1 ?> providers. If you want even more, please go to to HybridAuth web site and download the <a href="http://hybridauth.sourceforge.net/download.html">Additional Providers Package</a>.</li>
-		<li style="color: #000000;font-size: 14px;">Visit the <a href="http://hybridauth.sourceforge.net/#installer">HybridAuth</a> home page to make sure if there is a newer version.</li>
+		<li style="color: #000000;font-size: 14px;">Using the PixelpinAuth installer will erase your existing configuration file. If you already have an old installation of PixelpinAuth you might want to keep a copy of <b>config.php</b>,</li>
+		<li style="color: #000000;font-size: 14px;">PixelpinAuth includes by default <?php echo count( $PROVIDERS_CONFIG ) + 1 ?> providers. If you want even more, please go to to PixelpinAuth web site and download the <a href="http://pixelpinauth.sourceforge.net/download.html">Additional Providers Package</a>.</li>
+		<li style="color: #000000;font-size: 14px;">Visit the <a href="http://pixelpinauth.sourceforge.net/#installer">PixelpinAuth</a> home page to make sure if there is a newer version.</li>
 	</ul> 
  
-	<h4>HybridAuth Endpoint</h4> 
+	<h4>PixelpinAuth Endpoint</h4> 
  
 	
 	<ul style="list-style:circle inside;">
-		<li style="color: #000000;font-size: 14px;">HybridAuth endpoint url is where the index.php is located.</li>
-		<li style="color: #000000;font-size: 14px;">HybridAuth enpoint should be set to <b>+rx mode</b> (read and execute permissions)</li>
+		<li style="color: #000000;font-size: 14px;">PixelpinAuth endpoint url is where the index.php is located.</li>
+		<li style="color: #000000;font-size: 14px;">PixelpinAuth enpoint should be set to <b>+rx mode</b> (read and execute permissions)</li>
 	</ul>
 	
 	<div> 
 		<div class="cfg">
 		   <div class="cgfparams"> 
 			  <ul>
-				<li><label>HybridAuth Endpoint URL</label><input type="text" class="inputgnrc" value="<?php echo $GLOBAL_HYBRID_AUTH_URL_BASE; ?>" name="GLOBAL_HYBRID_AUTH_URL_BASE" style="min-width:600px;"></li>
+				<li><label>PixelpinAuth Endpoint URL</label><input type="text" class="inputgnrc" value="<?php echo $GLOBAL_HYBRID_AUTH_URL_BASE; ?>" name="GLOBAL_HYBRID_AUTH_URL_BASE" style="min-width:600px;"></li>
 			  </ul>
 		   </div> 
 		   <div class="cgftip" style="margin-left: 646px;padding: 20px;min-height: 60px;width: 300px;">
-				Set the complete url to hybridauth core library on your website.  
-				This URL will be used for many providers as the <a href="http://hybridauth.sourceforge.net/userguide/HybridAuth_endpoint_URL.html" target="_blank">Endpoint</a> for your website. 
+				Set the complete url to pixelpinauth core library on your website.  
+				This URL will be used for many providers as the <a href="http://pixelpinauth.sourceforge.net/userguide/PixelpinAuth_endpoint_URL.html" target="_blank">Endpoint</a> for your website. 
 		   </div>
 		</div>   
 	</div> 
@@ -277,7 +277,7 @@ ul li label {
 		$provider_callback_url      = "" ;
 
 		if( isset( $item["callback"] ) && $item["callback"] ){
-			$provider_callback_url  = '<span style="color:green">' . $GLOBAL_HYBRID_AUTH_URL_BASE . '?hauth.done=' . $provider . '</span>';
+			$provider_callback_url  = '<span style="color:green">' . $GLOBAL_HYBRID_AUTH_URL_BASE . '?pauth.done=' . $provider . '</span>';
 		}
 
 		$setupsteps = 0;
@@ -365,7 +365,7 @@ ul li label {
 		Thanks for scrolling this far down! Now click the big button to complete the installation.
 		<br />
 		<br />
-		<input type="submit" class="inputsave" value="Setup HybridAuth" /> 
+		<input type="submit" class="inputsave" value="Setup PixelpinAuth" /> 
 	</div> 
 </div>
 </form>

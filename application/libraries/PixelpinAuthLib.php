@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require APPPATH.'/third_party/hybridauth/Hybrid/Auth.php';
+require APPPATH.'/third_party/pixelpinauth/Pixelpin/Auth.php';
 
-class HybridAuthLib extends Hybrid_Auth
+class PixelpinAuthLib extends Pixelpin_Auth
 {
 	function __construct($config = array())
 	{
@@ -13,7 +13,7 @@ class HybridAuthLib extends Hybrid_Auth
 
 		parent::__construct($config);
 
-		log_message('debug', 'HybridAuthLib Class Initalized');
+		log_message('debug', 'PixelpinAuthLib Class Initalized');
 	}
 
 	/**
@@ -30,5 +30,5 @@ class HybridAuthLib extends Hybrid_Auth
 	}
 }
 
-/* End of file HybridAuthLib.php */
-/* Location: ./application/libraries/HybridAuthLib.php */
+/* End of file PixelpinAuthLib.php */
+/* Location: ./application/libraries/PixelpinAuthLib.php */

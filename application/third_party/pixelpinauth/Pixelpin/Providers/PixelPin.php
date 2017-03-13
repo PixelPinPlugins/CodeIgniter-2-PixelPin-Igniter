@@ -1,16 +1,16 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 /**
- * Hybrid_Providers_PixelPin provider adapter based on OAuth2 protocol
+ * Pixelpin_Providers_PixelPin provider adapter based on OAuth2 protocol
  * 
- * http://hybridauth.sourceforge.net/userguide/IDProvider_info_PixelPin.html
+ * http://pixelpinauth.sourceforge.net/userguide/IDProvider_info_PixelPin.html
  */
-class Hybrid_Providers_PixelPin extends Hybrid_Provider_Model_OAuth2
+class Pixelpin_Providers_PixelPin extends Pixelpin_Provider_Model_OAuth2
 {
 	public $scope = "openid profile email phone address";
 

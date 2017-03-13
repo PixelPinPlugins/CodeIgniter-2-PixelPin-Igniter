@@ -1,8 +1,8 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 // A service client for the OAuth 2 flow.
@@ -31,7 +31,7 @@ class OAuth2Client
 	public $curl_connect_time_out    = 30;
 	public $curl_ssl_verifypeer      = false;
 	public $curl_header              = array('Content-Type: application/x-www-form-urlencoded');
-	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; HybridAuth http://hybridauth.sourceforge.net/";
+	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; PixelpinAuth http://pixelpinauth.sourceforge.net/";
 	public $curl_authenticate_method = "POST";
         public $curl_proxy               = null;
 
@@ -194,8 +194,8 @@ class OAuth2Client
 
 	private function request( $url, $params=false, $type="GET", $httpHeader)
 	{
-		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
+		Pixelpin_Logger::info( "Enter OAuth2Client::request( $url )" );
+		Pixelpin_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
 
 		$urlEncodedParams = http_build_query($params, '', '&');
 
@@ -224,8 +224,8 @@ class OAuth2Client
 		}
 
 		$response = curl_exec($ch);
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
+		Pixelpin_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
+		Pixelpin_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
 
 		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ch));

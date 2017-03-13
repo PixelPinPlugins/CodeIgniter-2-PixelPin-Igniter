@@ -1,37 +1,37 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class HAuth extends CI_Controller {
+class PAuth extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('hauth/home');
+		$this->load->view('pauth/home');
 	}
 
 	public function login($provider)
 	{
-		log_message('debug', "controllers.HAuth.login($provider) called");
+		log_message('debug', "controllers.PAuth.login($provider) called");
 
 		try
 		{
-			log_message('debug', 'controllers.HAuth.login: loading HybridAuthLib');
-			$this->load->library('HybridAuthLib');
+			log_message('debug', 'controllers.PAuth.login: loading PixelpinAuthLib');
+			$this->load->library('PixelpinAuthLib');
 
-			if ($this->hybridauthlib->providerEnabled($provider))
+			if ($this->pixelpinauthlib->providerEnabled($provider))
 			{
-				log_message('debug', "controllers.HAuth.login: service $provider enabled, trying to authenticate.");
-				$service = $this->hybridauthlib->authenticate($provider);
+				log_message('debug', "controllers.PAuth.login: service $provider enabled, trying to authenticate.");
+				$service = $this->pixelpinauthlib->authenticate($provider);
 
 				if ($service->isUserConnected())
 				{
-					log_message('debug', 'controller.HAuth.login: user authenticated.');
+					log_message('debug', 'controller.PAuth.login: user authenticated.');
 
 					$user_profile = $service->getUserProfile();
 
-					log_message('info', 'controllers.HAuth.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
+					log_message('info', 'controllers.PAuth.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
 
 					$data['user_profile'] = $user_profile;
 
-					$this->load->view('hauth/done',$data);
+					$this->load->view('pauth/done',$data);
 				}
 				else // Cannot authenticate user
 				{
@@ -40,7 +40,7 @@ class HAuth extends CI_Controller {
 			}
 			else // This service is not enabled.
 			{
-				log_message('error', 'controllers.HAuth.login: This provider is not enabled ('.$provider.')');
+				log_message('error', 'controllers.PAuth.login: This provider is not enabled ('.$provider.')');
 				show_404($_SERVER['REQUEST_URI']);
 			}
 		}
@@ -54,11 +54,11 @@ class HAuth extends CI_Controller {
 				case 2 : $error = 'Provider not properly configured.'; break;
 				case 3 : $error = 'Unknown or disabled provider.'; break;
 				case 4 : $error = 'Missing provider application credentials.'; break;
-				case 5 : log_message('debug', 'controllers.HAuth.login: Authentification failed. The user has canceled the authentication or the provider refused the connection.');
+				case 5 : log_message('debug', 'controllers.PAuth.login: Authentification failed. The user has canceled the authentication or the provider refused the connection.');
 				         //redirect();
 				         if (isset($service))
 				         {
-				         	log_message('debug', 'controllers.HAuth.login: logging out from service.');
+				         	log_message('debug', 'controllers.PAuth.login: logging out from service.');
 				         	$service->logout();
 				         }
 				         //show_error('User has cancelled the authentication or the provider refused the connection.');
@@ -75,15 +75,15 @@ class HAuth extends CI_Controller {
 				$service->logout();
 			}
 
-			log_message('error', 'controllers.HAuth.login: '.$error);
+			log_message('error', 'controllers.PAuth.login: '.$error);
 			show_error('Error authenticating user.');
 		}
 	}
 
 	public function logout($provider)
 	{
-		$this->load->library('HybridAuthLib');
-		$service = $this->hybridauthlib->logout($provider);
+		$this->load->library('PixelpinAuthLib');
+		$service = $this->pixelpinauthlib->logout($provider);
 		if ($service->isUserConnected())
 		{
 			$service->logout();
@@ -104,20 +104,20 @@ class HAuth extends CI_Controller {
 	public function endpoint()
 	{
 
-		log_message('debug', 'controllers.HAuth.endpoint called.');
-		log_message('info', 'controllers.HAuth.endpoint: $_REQUEST: '.print_r($_REQUEST, TRUE));
+		log_message('debug', 'controllers.PAuth.endpoint called.');
+		log_message('info', 'controllers.PAuth.endpoint: $_REQUEST: '.print_r($_REQUEST, TRUE));
 
 		if ($_SERVER['REQUEST_METHOD'] === 'GET')
 		{
-			log_message('debug', 'controllers.HAuth.endpoint: the request method is GET, copying REQUEST array into GET array.');
+			log_message('debug', 'controllers.PAuth.endpoint: the request method is GET, copying REQUEST array into GET array.');
 			$_GET = $_REQUEST;
 		}
 
-		log_message('debug', 'controllers.HAuth.endpoint: loading the original HybridAuth endpoint script.');
-		require_once APPPATH.'/third_party/hybridauth/index.php';
+		log_message('debug', 'controllers.PAuth.endpoint: loading the original PixelpinAuth endpoint script.');
+		require_once APPPATH.'/third_party/pixelpinauth/index.php';
 
 	}
 }
 
-/* End of file hauth.php */
-/* Location: ./application/controllers/hauth.php */
+/* End of file pauth.php */
+/* Location: ./application/controllers/pauth.php */

@@ -1,6 +1,6 @@
 Pixelpin Igniter
 =============
-Uses the HybridAuth PHP library to Enable authentication via PixelPin.
+Uses the PixelpinAuth PHP library to Enable authentication via PixelPin.
 
 Requirements
 ------------

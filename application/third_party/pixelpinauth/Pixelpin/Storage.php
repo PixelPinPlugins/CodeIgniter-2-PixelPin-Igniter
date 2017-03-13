@@ -1,25 +1,25 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 /**
- * HybridAuth storage manager
+ * PixelpinAuth storage manager
  */
-class Hybrid_Storage 
+class Pixelpin_Storage 
 {
 	function __construct()
 	{ 
 		if ( ! session_id() ){
 			if( ! session_start() ){
-				throw new Exception( "Hybridauth requires the use of 'session_start()' at the start of your script, which appears to be disabled.", 1 );
+				throw new Exception( "Pixelpinauth requires the use of 'session_start()' at the start of your script, which appears to be disabled.", 1 );
 			}
 		}
 
 		$this->config( "php_session_id", session_id() );
-		$this->config( "version", Hybrid_Auth::$version );
+		$this->config( "version", Pixelpin_Auth::$version );
 	}
 
 	public function config($key, $value=null) 

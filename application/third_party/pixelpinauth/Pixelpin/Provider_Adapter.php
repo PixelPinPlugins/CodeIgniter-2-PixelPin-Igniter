@@ -1,21 +1,21 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html
 */
 
 /**
- * Hybrid_Provider_Adapter is the basic class which Hybrid_Auth will use
+ * Pixelpin_Provider_Adapter is the basic class which Pixelpin_Auth will use
  * to connect users to a given provider. 
  * 
- * Basically Hybrid_Provider_Adapterwill create a bridge from your php 
+ * Basically Pixelpin_Provider_Adapterwill create a bridge from your php 
  * application to the provider api.
  * 
- * Hybrid_Auth will automatically load Hybrid_Provider_Adapter and create
+ * Pixelpin_Auth will automatically load Pixelpin_Provider_Adapter and create
  * an instance of it for each authenticated provider.
  */
-class Hybrid_Provider_Adapter
+class Pixelpin_Provider_Adapter
 {
 	/* Provider ID (or unique name) */
 	public $id       = NULL ;
@@ -42,7 +42,7 @@ class Hybrid_Provider_Adapter
 	*/
 	function factory( $id, $params = NULL )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Provider_Adapter::factory( $id )" );
+		Pixelpin_Logger::info( "Enter Pixelpin_Provider_Adapter::factory( $id )" );
 
 		# init the adapter config and params
 		$this->id     = $id;
@@ -76,9 +76,9 @@ class Hybrid_Provider_Adapter
 			$this->wrapper = $this->config["wrapper"]["class"];
 		}
 		else{ 
-			require_once Hybrid_Auth::$config["path_providers"] . $this->id . ".php" ;
+			require_once Pixelpin_Auth::$config["path_providers"] . $this->id . ".php" ;
 
-			$this->wrapper = "Hybrid_Providers_" . $this->id; 
+			$this->wrapper = "Pixelpin_Providers_" . $this->id; 
 		}
 
 		# create the adapter instance, and pass the current params and config
@@ -90,63 +90,63 @@ class Hybrid_Provider_Adapter
 	// --------------------------------------------------------------------
 
 	/**
-	* Hybrid_Provider_Adapter::login(), prepare the user session and the authentication request
+	* Pixelpin_Provider_Adapter::login(), prepare the user session and the authentication request
 	* for index.php
 	*/
 	function login()
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Provider_Adapter::login( {$this->id} ) " );
+		Pixelpin_Logger::info( "Enter Pixelpin_Provider_Adapter::login( {$this->id} ) " );
 
 		if( ! $this->adapter ){
-			throw new Exception( "Hybrid_Provider_Adapter::login() should not directly used." );
+			throw new Exception( "Pixelpin_Provider_Adapter::login() should not directly used." );
 		}
 
 		// clear all unneeded params
-		foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
-			Hybrid_Auth::storage()->delete( "hauth_session.{$idpid}.hauth_return_to"    );
-			Hybrid_Auth::storage()->delete( "hauth_session.{$idpid}.hauth_endpoint"     );
-			Hybrid_Auth::storage()->delete( "hauth_session.{$idpid}.id_provider_params" );
+		foreach( Pixelpin_Auth::$config["providers"] as $idpid => $params ){
+			Pixelpin_Auth::storage()->delete( "pauth_session.{$idpid}.pauth_return_to"    );
+			Pixelpin_Auth::storage()->delete( "pauth_session.{$idpid}.pauth_endpoint"     );
+			Pixelpin_Auth::storage()->delete( "pauth_session.{$idpid}.id_provider_params" );
 		}
 
 		// make a fresh start
 		$this->logout();
 
-		# get hybridauth base url
-		$HYBRID_AUTH_URL_BASE = Hybrid_Auth::$config["base_url"];
+		# get pixelpinauth base url
+		$HYBRID_AUTH_URL_BASE = Pixelpin_Auth::$config["base_url"];
 
 		# we make use of session_id() as storage hash to identify the current user
 		# using session_regenerate_id() will be a problem, but ..
-		$this->params["hauth_token"] = session_id();
+		$this->params["pauth_token"] = session_id();
 
 		# set request timestamp
-		$this->params["hauth_time"]  = time();
+		$this->params["pauth_time"]  = time();
 
-		# for default HybridAuth endpoint url hauth_login_start_url
+		# for default PixelpinAuth endpoint url pauth_login_start_url
 		# 	auth.start  required  the IDp ID
 		# 	auth.time   optional  login request timestamp
-		$this->params["login_start"] = $HYBRID_AUTH_URL_BASE . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "hauth.start={$this->id}&hauth.time={$this->params["hauth_time"]}";
+		$this->params["login_start"] = $HYBRID_AUTH_URL_BASE . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "pauth.start={$this->id}&pauth.time={$this->params["pauth_time"]}";
 
-		# for default HybridAuth endpoint url hauth_login_done_url
+		# for default PixelpinAuth endpoint url pauth_login_done_url
 		# 	auth.done   required  the IDp ID
-		$this->params["login_done"]  = $HYBRID_AUTH_URL_BASE . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "hauth.done={$this->id}";
+		$this->params["login_done"]  = $HYBRID_AUTH_URL_BASE . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "pauth.done={$this->id}";
 
-		Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.hauth_return_to"    , $this->params["hauth_return_to"] );
-		Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.hauth_endpoint"     , $this->params["login_done"] ); 
-		Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.id_provider_params" , $this->params );
+		Pixelpin_Auth::storage()->set( "pauth_session.{$this->id}.pauth_return_to"    , $this->params["pauth_return_to"] );
+		Pixelpin_Auth::storage()->set( "pauth_session.{$this->id}.pauth_endpoint"     , $this->params["login_done"] ); 
+		Pixelpin_Auth::storage()->set( "pauth_session.{$this->id}.id_provider_params" , $this->params );
 
 		// store config to be used by the end point 
-		Hybrid_Auth::storage()->config( "CONFIG", Hybrid_Auth::$config );
+		Pixelpin_Auth::storage()->config( "CONFIG", Pixelpin_Auth::$config );
 
 		// move on
-		Hybrid_Logger::debug( "Hybrid_Provider_Adapter::login( {$this->id} ), redirect the user to login_start URL." );
+		Pixelpin_Logger::debug( "Pixelpin_Provider_Adapter::login( {$this->id} ), redirect the user to login_start URL." );
 
-		Hybrid_Auth::redirect( $this->params["login_start"] );
+		Pixelpin_Auth::redirect( $this->params["login_start"] );
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	* let hybridauth forget all about the user for the current provider
+	* let pixelpinauth forget all about the user for the current provider
 	*/
 	function logout()
 	{
@@ -174,14 +174,14 @@ class Hybrid_Provider_Adapter
 	*/ 
 	public function __call( $name, $arguments ) 
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Provider_Adapter::$name(), Provider: {$this->id}" );
+		Pixelpin_Logger::info( "Enter Pixelpin_Provider_Adapter::$name(), Provider: {$this->id}" );
 
 		if ( ! $this->isUserConnected() ){
 			throw new Exception( "User not connected to the provider {$this->id}.", 7 );
 		} 
 
 		if ( ! method_exists( $this->adapter, $name ) ){
-			throw new Exception( "Call to undefined function Hybrid_Providers_{$this->id}::$name()." );
+			throw new Exception( "Call to undefined function Pixelpin_Providers_{$this->id}::$name()." );
 		}
 
 		if( count( $arguments ) ){
@@ -201,7 +201,7 @@ class Hybrid_Provider_Adapter
 	public function getAccessToken()
 	{
 		if( ! $this->adapter->isUserConnected() ){
-			Hybrid_Logger::error( "User not connected to the provider." );
+			Pixelpin_Logger::error( "User not connected to the provider." );
 
 			throw new Exception( "User not connected to the provider.", 7 );
 		}
@@ -224,7 +224,7 @@ class Hybrid_Provider_Adapter
 	function api()
 	{
 		if( ! $this->adapter->isUserConnected() ){
-			Hybrid_Logger::error( "User not connected to the provider." );
+			Pixelpin_Logger::error( "User not connected to the provider." );
 
 			throw new Exception( "User not connected to the provider.", 7 );
 		}
@@ -235,20 +235,20 @@ class Hybrid_Provider_Adapter
 	// --------------------------------------------------------------------
 
 	/**
-	* redirect the user to hauth_return_to (the callback url)
+	* redirect the user to pauth_return_to (the callback url)
 	*/
 	function returnToCallbackUrl()
 	{ 
 		// get the stored callback url
-		$callback_url = Hybrid_Auth::storage()->get( "hauth_session.{$this->id}.hauth_return_to" );
+		$callback_url = Pixelpin_Auth::storage()->get( "pauth_session.{$this->id}.pauth_return_to" );
 
 		// remove some unneed'd stored data 
-		Hybrid_Auth::storage()->delete( "hauth_session.{$this->id}.hauth_return_to"    );
-		Hybrid_Auth::storage()->delete( "hauth_session.{$this->id}.hauth_endpoint"     );
-		Hybrid_Auth::storage()->delete( "hauth_session.{$this->id}.id_provider_params" );
+		Pixelpin_Auth::storage()->delete( "pauth_session.{$this->id}.pauth_return_to"    );
+		Pixelpin_Auth::storage()->delete( "pauth_session.{$this->id}.pauth_endpoint"     );
+		Pixelpin_Auth::storage()->delete( "pauth_session.{$this->id}.id_provider_params" );
 
 		// back to home
-		Hybrid_Auth::redirect( $callback_url );
+		Pixelpin_Auth::redirect( $callback_url );
 	}
 
 	// --------------------------------------------------------------------
@@ -258,8 +258,8 @@ class Hybrid_Provider_Adapter
 	*/
 	function getConfigById( $id )
 	{ 
-		if( isset( Hybrid_Auth::$config["providers"][$id] ) ){
-			return Hybrid_Auth::$config["providers"][$id];
+		if( isset( Pixelpin_Auth::$config["providers"][$id] ) ){
+			return Pixelpin_Auth::$config["providers"][$id];
 		}
 
 		return NULL;
@@ -272,7 +272,7 @@ class Hybrid_Provider_Adapter
 	*/
 	function getProviderCiId( $id )
 	{
-		foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
+		foreach( Pixelpin_Auth::$config["providers"] as $idpid => $params ){
 			if( strtolower( $idpid ) == strtolower( $id ) ){
 				return $idpid;
 			}

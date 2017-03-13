@@ -20,7 +20,7 @@
 <p>City: <?php echo $user_profile->city ?></p>
 <p>Zip/postcode: <?php echo $user_profile->zip ?></p>
 
-<a href="http://local.codeigniter.co.uk/index.php/hauth/logout/PixelPin">LogOut</a>
+<a href="<?php echo base_url(); ?>index.php/pauth/logout/PixelPin">Sign Out</a>
 
 </body>
 </html>

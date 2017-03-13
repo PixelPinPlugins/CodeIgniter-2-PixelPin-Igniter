@@ -1,18 +1,18 @@
 <?php
 /*!
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* PixelpinAuth
+* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
+* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html 
 */
 
 /**
- * Hybrid_User_Contact 
+ * Pixelpin_User_Contact 
  * 
  * used to provider the connected user contacts list on a standardized structure across supported social apis.
  * 
- * http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Contacts.html
+ * http://pixelpinauth.sourceforge.net/userguide/Profile_Data_User_Contacts.html
  */
-class Hybrid_User_Contact
+class Pixelpin_User_Contact
 {
 	/* The Unique contact user ID */
 	public $identifier = NULL;
