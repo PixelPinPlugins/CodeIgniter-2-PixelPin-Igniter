@@ -124,7 +124,6 @@ ul li label {
 									"callback"          => TRUE,
 									"require_client_id" => TRUE, 
 									"new_app_link"      => "https://pixelpin.co.uk",
-									"userguide_section" => "http://pixelpinauth.sourceforge.net/userguide/IDProvider_info_Google.html",
 								) 
 							);
 
@@ -164,7 +163,6 @@ ul li label {
 			<ul style="list-style:disc inside;"> 
 				<li style="color: #000000;font-size: 14px;"><b style="color:red">Don't forget to delete</b> "<b>install.php</b>".</li>
 				<li style="color: #000000;font-size: 15px;">Visit the <a href="../examples/">examples</a> directory to try some working demos.</li> 
-				<li style="color: #000000;font-size: 15px;">Check out PixelpinAuth documentation at <a href="http://pixelpinauth.sourceforge.net">http://pixelpinauth.sourceforge.net</a>.</li> 
 			</ul> 
 
 			<br /> 			
@@ -230,8 +228,6 @@ ul li label {
 	<ul style="list-style:disc inside;">
 		<li style="color: #000000;font-size: 14px;">For security reason, please delete ("<b>install.php</b>") file as soon as you complete the installation process,</li>
 		<li style="color: #000000;font-size: 14px;">Using the PixelpinAuth installer will erase your existing configuration file. If you already have an old installation of PixelpinAuth you might want to keep a copy of <b>config.php</b>,</li>
-		<li style="color: #000000;font-size: 14px;">PixelpinAuth includes by default <?php echo count( $PROVIDERS_CONFIG ) + 1 ?> providers. If you want even more, please go to to PixelpinAuth web site and download the <a href="http://pixelpinauth.sourceforge.net/download.html">Additional Providers Package</a>.</li>
-		<li style="color: #000000;font-size: 14px;">Visit the <a href="http://pixelpinauth.sourceforge.net/#installer">PixelpinAuth</a> home page to make sure if there is a newer version.</li>
 	</ul> 
  
 	<h4>PixelpinAuth Endpoint</h4> 
@@ -251,7 +247,7 @@ ul li label {
 		   </div> 
 		   <div class="cgftip" style="margin-left: 646px;padding: 20px;min-height: 60px;width: 300px;">
 				Set the complete url to pixelpinauth core library on your website.  
-				This URL will be used for many providers as the <a href="http://pixelpinauth.sourceforge.net/userguide/PixelpinAuth_endpoint_URL.html" target="_blank">Endpoint</a> for your website. 
+				This URL will be used for many providers as the Endpoint for your website. 
 		   </div>
 		</div>   
 	</div> 
