@@ -1,13 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*!
-* PixelpinAuth
-* http://pixelpinauth.sourceforge.net | http://github.com/pixelpinauth/pixelpinauth
-* (c) 2009-2012, PixelpinAuth authors | http://pixelpinauth.sourceforge.net/licenses.html
-*/
-
-// ----------------------------------------------------------------------------------------
-//	PixelpinAuth Config file: http://pixelpinauth.sourceforge.net/userguide/Configuration.html
-// ----------------------------------------------------------------------------------------
 
 $config =
 	array(
@@ -27,7 +18,3 @@ $config =
 
 		"debug_file" => APPPATH.'/logs/pixelpinauth.log',
 	);
-
-
-/* End of file pixelpinauthlib.php */
-/* Location: ./application/config/pixelpinauthlib.php */

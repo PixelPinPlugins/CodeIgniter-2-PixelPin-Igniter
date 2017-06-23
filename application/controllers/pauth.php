@@ -95,10 +95,6 @@ class PAuth extends CI_Controller {
 				redirect('', 'refresh');
 			}
 		}
-		else
-		{
-
-		}
 	}
 
 	public function endpoint()

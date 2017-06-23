@@ -266,10 +266,7 @@ class Pixelpin_Auth
 		if( ! $params ){ 
 			$params = Pixelpin_Auth::storage()->get( "pauth_session.$providerId.id_provider_params" );
 			
-			if( ! $params)
-			{
 			Pixelpin_Logger::debug( "Pixelpin_Auth::setup( $providerId ), no params given. Trying to get the sotred for this provider.", $params );
-			}
 		}
 
 		if( ! $params ){ 
